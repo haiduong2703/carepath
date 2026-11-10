@@ -1,6 +1,6 @@
 # Báo cáo CarePath — kiểm tra ngoại tuyến
 
-Thời điểm: 2026-11-10T15:59:30.726Z
+Thời điểm: 2026-11-10T16:03:56.444Z
 
 Trạng thái: **offline-only**
 

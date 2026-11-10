@@ -1,6 +1,6 @@
 {
   "status": "offline-only",
-  "generatedAt": "2026-11-10T15:59:30.726Z",
+  "generatedAt": "2026-11-10T16:03:56.444Z",
   "total": 120,
   "llmJudged": 0,
   "model": null,
@@ -20,6 +20,6 @@
   "latencyPass": null,
   "inputPass": null,
   "outputPass": null,
-  "offlineLookupMeanMs": 2.2666666666666666,
+  "offlineLookupMeanMs": 1.9416666666666667,
   "note": "Offline diagnostic only. No LLM was called. Local lookup timing and rule checks do not establish GPT-5.4 latency, tokens, or response quality. Unchecked qualitative expectations are NOT counted as proven."
 }

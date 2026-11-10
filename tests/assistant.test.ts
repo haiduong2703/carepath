@@ -13,6 +13,7 @@ describe('Public-source retrieval', () => {
     for (const r of records) { expect(new URL(r.url).origin).toBe('https://bookingcare.vn'); expect(r.contentHash).toMatch(/^[a-f0-9]{64}$/); expect(Date.parse(r.fetchedAt)).toBeGreaterThan(0); }
   });
   it('finds an accentless personal name', () => expect(search('Ha Van Quyet')[0].id).toBe('i56'));
+  it('does not add unrelated profiles to a known full-name lookup', () => expect(search('Tìm Hà Văn Quyết').map(r => r.id)).toEqual(['i56']));
   it('does not show Hanoi doctors as HCM doctors', () => { const hits = search('Hà Văn Quyết', { city: 'TP. Hồ Chí Minh' }); expect(hits.every(r => r.city === 'TP. Hồ Chí Minh' || r.city === 'Toàn quốc')).toBe(true); expect(hits.some(r => r.id === 'i56')).toBe(false); });
   it('does not invent unsupported cities', () => expect(search('nơi khám ở Đà Nẵng')).toEqual([]));
   it('represents national categories without a false single city', () => expect(records.filter(r => r.type === 'specialty').every(r => r.city === 'Toàn quốc')).toBe(true));

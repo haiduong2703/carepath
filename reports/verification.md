@@ -1,6 +1,6 @@
 # Kiểm chứng bản bàn giao
 
-- 22 kiểm thử Vitest: đạt. Có kiểm tra prompt thực sự chứa câu hỏi và nguồn, usage từ nhà cung cấp qua mock, trạng thái lỗi không bịa token, nguồn/khu vực, bảo vệ y khoa, giới hạn model và hợp đồng HTTP.
+- 23 kiểm thử Vitest: đạt. Có kiểm tra prompt thực sự chứa câu hỏi và nguồn, usage từ nhà cung cấp qua mock, trạng thái lỗi không bịa token, nguồn/khu vực, tra cứu đúng tên không thêm hồ sơ không liên quan, bảo vệ y khoa, giới hạn model và hợp đồng HTTP.
 - 120 ca ngoại tuyến: đạt các kiểm tra quy tắc được khai báo. Nhiều kỳ vọng về nội dung cần LLM judge hoặc người đánh giá; không suy rộng thành 120 câu trả lời LLM đạt chất lượng.
 - Build React và bundle Worker: đạt. Worker tự kiểm tra homepage và health API, snapshot có dữ liệu.
 - HTTP localhost: homepage trả 200.

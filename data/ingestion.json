@@ -1,0 +1,14 @@
+{
+  "fetchedAt": "2026-11-10T15:09:08.789Z",
+  "origin": "https://bookingcare.vn",
+  "robotsSha256": "34ed069aaf51ef19ee06e2c039073349ce3e0f6af87d1fe50653ef8d349af5ca",
+  "counts": {
+    "doctor": 9,
+    "facility": 9,
+    "specialty": 10,
+    "service": 1
+  },
+  "total": 29,
+  "errors": [],
+  "policy": "Public allowlisted pages only. No appointment endpoints, patient reviews, images, or live schedule scraping. City inferred from profile lead; verify at source."
+}

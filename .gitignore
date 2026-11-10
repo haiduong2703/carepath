@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+.sites/
+.openai/*.local.*
+coverage/
+*.zip
+*.log
+screenshots/
+server/assets.generated.ts

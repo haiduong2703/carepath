@@ -5,7 +5,8 @@ import type { ChatRequest, ChatResult, CareRecord } from '../src/shared';
 import { normalize, search } from './retrieval';
 import { APP_FACTS, privacyAnswer, bookingActionAnswer } from './app-facts';
 
-export interface Env { ANTHROPIC_API_KEY?: string; CLAUDE_EFFORT?: string }
+import type { AuthEnv } from './auth';
+export interface Env extends AuthEnv { ANTHROPIC_API_KEY?: string; CLAUDE_EFFORT?: string }
 export const MODEL = 'claude-haiku-5-5';
 export const MAX_OUTPUT = 500;
 export const DEADLINE_MS = 8500;

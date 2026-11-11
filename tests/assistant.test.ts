@@ -3,7 +3,9 @@ import { AIMessage } from '@langchain/core/messages';
 import { ChatAnthropic } from '@langchain/anthropic';
 import { respond, createModel, reasoning, redact } from '../server/assistant';
 import { search, records } from '../server/retrieval';
-import { api } from '../server/api';
+import { api as applicationApi } from '../server/api';
+// These existing model/HTTP-contract tests run without accounts on isolated fixtures.
+const api = (request: Request, env: Parameters<typeof applicationApi>[1]) => applicationApi(request,{ ...env, AUTH_MODE:'disabled' });
 import { cases } from '../evals/cases';
 afterEach(() => vi.restoreAllMocks());
 describe('Public-source retrieval', () => {

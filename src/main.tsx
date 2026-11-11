@@ -4,18 +4,13 @@ import { ArrowDownToLine, ArrowRight, ArrowUpRight, AudioLines, BookOpen, Calend
 import type { CareRecord, ChatMessage, ChatResult, RecordType } from './shared';
 import './styles.css';
 import { EvaluationView } from './Evaluation';
+import { AuthGate, AccountMenu, apiRequest as request } from './Auth';
 
 type Page = 'discover' | 'assistant' | 'booking' | 'evaluation';
 type Turn = ChatMessage & { result?: ChatResult; error?: boolean };
 type Health = { llmConfigured: boolean; totalRecords: number; ingestion: { fetchedAt?: string; counts?: Record<string, number> } };
 const typeLabel: Record<RecordType, string> = { doctor: 'Bác sĩ', facility: 'Cơ sở y tế', specialty: 'Chuyên khoa', service: 'Dịch vụ' };
 const date = (iso?: string) => iso ? new Date(iso).toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }) : 'Chưa cập nhật';
-async function request<T>(url: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(url, init);
-  const body = await response.json();
-  if (!response.ok) throw new Error(body.error || 'Kết nối chưa thành công. Vui lòng thử lại.');
-  return body;
-}
 const prompts = ['Tìm bác sĩ tiêu hóa ở Hà Nội', 'Tôi muốn khám tổng quát tại TP. Hồ Chí Minh', 'Làm sao để đặt lịch khám?', 'Thông tin về xét nghiệm tại Diag'];
 
 function App() {
@@ -101,7 +96,7 @@ function App() {
       <div className="side-bottom"><div className="side-note"><div className="note-icon"><Heart size={19} /></div><strong>Một bước nhỏ,<br/>an tâm hơn mỗi ngày.</strong><p>Tìm hiểu thông tin trước khi chọn nơi chăm sóc sức khỏe.</p><button onClick={() => setInfo(true)}>Về CarePath <ArrowUpRight size={15}/></button></div><button className="source-button" onClick={() => setInfo(true)}><ShieldCheck size={17}/> Dữ liệu có dẫn nguồn <CircleHelp size={14}/></button></div>
     </aside>
     <div className="workspace">
-      <header className="topbar"><div className="breadcrumb"><button className="mobile-toggle icon-button" aria-label="Mở menu" onClick={() => setMobileMenu(true)}><Menu size={22}/></button><span>Không gian sức khỏe</span><ChevronRight size={14}/><strong>{nav.find(n => n.id === page)?.label}</strong></div><button className="status" onClick={() => setInfo(true)}><span className={`status-dot ${health?.llmConfigured ? 'live' : ''}`}/>{healthError ? 'Chưa kết nối' : health?.llmConfigured ? 'Trợ lý AI đã sẵn sàng' : 'Chế độ tra cứu'}<Info size={14}/></button></header>
+      <header className="topbar"><div className="breadcrumb"><button className="mobile-toggle icon-button" aria-label="Mở menu" onClick={() => setMobileMenu(true)}><Menu size={22}/></button><span>Không gian sức khỏe</span><ChevronRight size={14}/><strong>{nav.find(n => n.id === page)?.label}</strong></div><div className="topbar-actions"><button className="status" onClick={() => setInfo(true)}><span className={`status-dot ${health?.llmConfigured ? 'live' : ''}`}/>{healthError ? 'Chưa kết nối' : health?.llmConfigured ? 'Trợ lý AI đã sẵn sàng' : 'Chế độ tra cứu'}<Info size={14}/></button><AccountMenu/></div></header>
       <main>
         {page === 'discover' && <>
           <div className="section-kicker"><span/> CHỌN NƠI KHÁM, BẮT ĐẦU TỪ SỰ THẤU HIỂU</div>
@@ -129,4 +124,4 @@ function RecordCard({ record: r, onClick }: { record: CareRecord; onClick: () =>
   const Icon = r.type === 'doctor' ? Stethoscope : r.type === 'facility' ? Hospital : r.type === 'service' ? Microscope : HeartPulse;
   return <article className="record-card"><div className="card-top"><div className={`record-icon ${r.type === 'doctor' ? 'blue' : r.type === 'specialty' ? 'lavender' : 'mint'}`}><Icon size={26} strokeWidth={1.6}/></div><span className="category-label">{typeLabel[r.type]}</span></div><h3>{r.name}</h3><div className="card-city"><MapPin size={14}/>{r.city}</div><p>{r.specialties.length ? r.specialties.slice(0, 3).join(' · ') : 'Xem thông tin chi tiết tại hồ sơ nguồn'}</p><div className="card-bottom"><span><ShieldCheck size={14}/> BookingCare</span><button onClick={onClick}>Xem hồ sơ <ArrowUpRight size={17}/></button></div></article>;
 }
-createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);
+createRoot(document.getElementById('root')!).render(<React.StrictMode><AuthGate><App/></AuthGate></React.StrictMode>);

@@ -5,7 +5,8 @@ const security = { 'x-content-type-options': 'nosniff', 'referrer-policy': 'stri
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const path = new URL(request.url).pathname;
-    if (path.startsWith('/api/')) return api(request, env);
+    // Hosted publication always requires our own verified session, even if an env value is misconfigured.
+    if (path.startsWith('/api/')) return api(request, { ...env, AUTH_MODE:'password' });
     if (!['GET', 'HEAD'].includes(request.method)) return new Response('Method not allowed', { status: 405 });
     const file = assets[path === '/' ? '/index.html' : path];
     if (!file) return new Response('Not found', { status: 404 });

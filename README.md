@@ -4,10 +4,10 @@
 
 ## Trạng thái bàn giao
 
-- Website có tìm kiếm, bộ lọc khu vực/loại hồ sơ, xem nguồn, hội thoại và trang hỗ trợ đặt lịch.
+- Website có đăng ký/đăng nhập bằng email và mật khẩu, tìm kiếm, bộ lọc khu vực/loại hồ sơ, xem nguồn, hội thoại và trang hỗ trợ đặt lịch.
 - Hội thoại và LLM-as-judge dùng Claude Haiku 5.5 qua LangChain. Mỗi môi trường cần tự cấu hình `ANTHROPIC_API_KEY`; nếu thiếu khóa thì chạy **tra cứu**, không gắn nhãn phản hồi đó là LLM.
 - Báo cáo thực tế: [live-report.md](reports/live-report.md), [JSON từng ca](reports/live-results.json), [CSV](reports/live-results.csv). Báo cáo ghi riêng ca không đạt và các giới hạn của phép đo.
-- Website: https://carepath-bookingcare-assistant.finitejet1.chatgpt.site (riêng tư theo quyền Sites). Repository: https://github.com/haiduong2703/carepath.
+- Website: https://carepath-bookingcare-assistant.finitejet1.chatgpt.site. Người dùng tự đăng ký tài khoản CarePath, không cần tài khoản ChatGPT/Google. Repository: https://github.com/haiduong2703/carepath.
 - Đặt lịch bằng cách chuyển sang hồ sơ chính thức. Không có API ghi lịch được BookingCare cấp, nên CarePath không tạo, hủy, đổi hoặc xác nhận lịch hẹn.
 
 ## Chạy trên máy
@@ -20,7 +20,7 @@ Copy-Item .env.example .env
 npm run dev
 ```
 
-Mở `http://127.0.0.1:8787`. Không cần khóa để dùng tìm kiếm và hướng dẫn tra cứu. Máy chủ API và React dùng cùng cổng để tránh lỗi CORS.
+Mở `http://127.0.0.1:8787`, chọn **Đăng ký**, nhập tên, email và mật khẩu từ 12–128 ký tự. Sau khi tạo tài khoản, ứng dụng tự đăng nhập. Không cần API key để dùng tìm kiếm và hướng dẫn tra cứu. Máy chủ API và React dùng cùng cổng để tránh lỗi CORS.
 
 Để bật AI, tự đặt khóa vào `.env` trên máy của bạn:
 
@@ -40,7 +40,18 @@ npm run build
 npm start
 ```
 
-`npm run build` kiểm tra TypeScript, build React bằng Vite, bundle API thành Cloudflare Worker ESM và tự kiểm tra `/` cùng `/api/health`. `npm start` phục vụ bản production cục bộ. Chạy lại build sau khi cập nhật dữ liệu hoặc báo cáo.
+`npm run build` kiểm tra TypeScript, build React bằng Vite, bundle API thành Cloudflare Worker ESM và tự kiểm tra trang chủ cùng việc chặn API khi chưa đăng nhập/thiếu DB. `npm start` phục vụ bản production cục bộ. Chạy lại build sau khi cập nhật dữ liệu hoặc báo cáo.
+
+## Tài khoản cho bản nộp thử
+
+- Bất kỳ người xem nào cũng có thể tự đăng ký bằng email/mật khẩu; không dùng đăng nhập ChatGPT hoặc Google. Email chỉ là tên tài khoản, **chưa được xác minh qua email**. Chưa có quên mật khẩu/gửi email. Dùng mật khẩu riêng cho bản thử.
+- Mật khẩu băm bằng scrypt (`N=32768, r=8, p=3`, salt ngẫu nhiên 16 byte). Phiên có hạn 7 ngày, token ngẫu nhiên 32 byte trong cookie HttpOnly/SameSite=Lax (Secure trên HTTPS); DB chỉ lưu SHA-256 của token. Đăng xuất xóa phiên trên máy chủ.
+- Mọi API nghiệp vụ đều yêu cầu phiên hợp lệ. POST kiểm tra Origin và CSRF. Giới hạn đăng ký 5 lần/giờ/IP, đăng nhập 20 lần/phút/IP và 10 lần/phút/email; IP do nền tảng/socket cung cấp. Không tin header người dùng ChatGPT do client gửi.
+- Local lưu tại `.data/auth.json` (Git bỏ qua), dành cho một tiến trình Node. Dừng rồi chạy lại vẫn đăng nhập được. Sites dùng D1 qua binding `DB`; tài khoản local và hosted **độc lập**. Không đưa `.data/` vào Git/zip.
+- Schema ở `db/schema.ts`, migration SQL + metadata ở `drizzle/`. Khi sửa schema, chạy `npm run db:generate`, kiểm tra migration và build; Sites áp dụng migration khi triển khai. Không sửa migration đã áp dụng. Worker luôn bắt đăng nhập và trả lỗi khi thiếu DB.
+- Chạy `npm run test:auth` để thử 20 ca HTTP/SQLite về đăng ký, đăng nhập, cookie, CSRF, giới hạn thử sai, phiên hết hạn/đăng xuất và lưu tài khoản qua khởi động lại. Test không đọc `.env`, không gọi LLM. Các script đánh giá mô hình dùng server loopback riêng bỏ qua auth; không thể tắt auth của Worker triển khai bằng biến môi trường.
+
+Báo cáo 120 ca hiện có đo trước khi thêm đăng nhập. Báo cáo đó đánh giá phản hồi AI qua HTTP localhost; không đo thời gian đăng ký/đăng nhập hoặc D1 trên website hosted. Nội dung báo cáo cũ được giữ nguyên.
 
 ## Chạy thử bằng file test
 
@@ -118,9 +129,9 @@ Lệnh trả mã lỗi nếu có lỗi cấu trúc hoặc judge không hoàn t�
 | POST `/api/chat` | `{ message, history?, city? }` |
 | GET `/api/evaluation` | Báo cáo tổng hợp hiện có |
 
-API giới hạn body 24KB, câu hỏi 2.000 ký tự, 6 tin nhắn lịch sử, kiểm tra Origin và giới hạn 20 lượt/phút trong mỗi process/isolate. Không thay thế rate limiter phân tán; khi công khai diện rộng cần lớp hạn mức bền vững theo tài khoản. Website Sites mới mặc định riêng tư.
+API chat giới hạn body 24KB, câu hỏi 2.000 ký tự, 6 tin nhắn lịch sử, kiểm tra Origin/CSRF và giới hạn 20 lượt/phút trong mỗi process/isolate theo tài khoản. Không thay thế rate limiter phân tán; khi công khai diện rộng cần lớp hạn mức chat bền vững. Auth có bộ đếm riêng được lưu trong D1/file local.
 
-Hội thoại chỉ giữ trong React memory; không database hoặc localStorage. Một số số định danh/email được lọc trước khi gọi Anthropic, nhưng bộ lọc không bảo đảm loại bỏ mọi thông tin cá nhân. Ứng dụng không ghi nội dung chat của người dùng vào log và không tự cam kết chính sách Zero Data Retention của Anthropic. Xóa/đóng phiên không đồng nghĩa xóa dữ liệu nhà cung cấp. Báo cáo test chỉ lưu các câu hỏi mẫu do chương trình tạo. Không gửi thông tin nhạy cảm.
+Hội thoại chỉ giữ trong React memory, không lưu chat vào database hoặc localStorage. Tên, email, hash mật khẩu, hash token phiên và bộ đếm giới hạn đăng nhập được lưu riêng trên máy chủ. Tên/email tài khoản không tự động đưa vào prompt. Một số số định danh/email trong chat được lọc trước khi gọi Anthropic, nhưng bộ lọc không bảo đảm loại bỏ mọi thông tin cá nhân. Ứng dụng không ghi nội dung chat của người dùng vào log và không tự cam kết chính sách Zero Data Retention của Anthropic. Xóa/đóng phiên không đồng nghĩa xóa dữ liệu nhà cung cấp. Báo cáo test chỉ lưu các câu hỏi mẫu do chương trình tạo. Không gửi thông tin nhạy cảm.
 
 ## Kiến trúc mã nguồn
 

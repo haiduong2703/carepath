@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ArrowDownToLine, Clock3, FileCheck2, Info, Sparkles } from 'lucide-react';
+import { apiRequest } from './Auth';
 interface Stats { total: number; meanHttpLatencyMs: number | null; meanServiceLatencyMs: number | null; meanInputTokens: number | null; meanOutputTokens: number | null }
 interface Report {
   status: string; total: number; llmJudged: number; judgePassed: number; rulesPassed: number;
@@ -17,7 +18,7 @@ const passed = (v: boolean | null | undefined) => v == null ? 'Chưa đo' : v ? 
 export function EvaluationView({ health }: { health: { totalRecords: number } | null }) {
   const [report, setReport] = useState<Report | null>(null);
   const [error, setError] = useState(false);
-  useEffect(() => { const controller = new AbortController(); fetch('/api/evaluation', { signal: controller.signal }).then(async r => { if (!r.ok) throw new Error(); setReport(await r.json()); }).catch(e => { if (e.name !== 'AbortError') setError(true); }); return () => controller.abort(); }, []);
+  useEffect(() => { const controller = new AbortController(); apiRequest<Report>('/api/evaluation', { signal: controller.signal }).then(setReport).catch(e => { if (e.name !== 'AbortError') setError(true); }); return () => controller.abort(); }, []);
   const measured = report?.status === 'live-complete' || report?.status === 'live-incomplete';
   const ready = report?.status === 'live-complete';
   const percent = report?.total && report.llmJudged ? 100 * report.judgePassed / report.total : null;

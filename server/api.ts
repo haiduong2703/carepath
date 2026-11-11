@@ -3,6 +3,7 @@ import { records, search } from './retrieval';
 import { respond, MODEL, type Env } from './assistant';
 import ingestion from '../data/ingestion.json';
 import evaluation from '../reports/summary.json';
+import { authRequired, authRoute, currentUser, validMutation } from './auth';
 const chatSchema = z.object({
   message: z.string().trim().min(1).max(2000),
   city: z.enum(['', 'Hà Nội', 'TP. Hồ Chí Minh']).optional(),
@@ -13,6 +14,14 @@ const headers = { 'content-type': 'application/json; charset=utf-8', 'cache-cont
 const json = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers });
 export async function api(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
+  if (url.pathname.startsWith('/api/auth/')) return authRoute(request,env);
+  let userId: string | null = null;
+  if (authRequired(env)) {
+    try { userId = (await currentUser(request,env))?.id ?? null; }
+    catch { return json({ error:'Dịch vụ đăng nhập tạm thời không khả dụng.' },503); }
+    if (!userId) return json({ error:'Vui lòng đăng nhập để sử dụng CarePath.' },401);
+    if (!['GET','HEAD'].includes(request.method) && !validMutation(request)) return json({ error:'Phiên biểu mẫu không hợp lệ. Vui lòng tải lại trang.' },403);
+  }
   if (url.pathname === '/api/health' && request.method === 'GET') {
     const configured = !!env.ANTHROPIC_API_KEY?.trim();
     return json({ ok: true, llmConfigured: configured, provider: 'anthropic', mode: configured ? 'llm' : 'lookup', model: configured ? MODEL : null, totalRecords: records.length, ingestion });
@@ -31,7 +40,7 @@ export async function api(request: Request, env: Env): Promise<Response> {
     const origin = request.headers.get('origin');
     if (origin && origin !== url.origin) return json({ error: 'Nguồn yêu cầu không hợp lệ.' }, 403);
     if (!request.headers.get('content-type')?.startsWith('application/json')) return json({ error: 'Yêu cầu phải là JSON.' }, 415);
-    const key = request.headers.get('oai-authenticated-user-id') || request.headers.get('cf-connecting-ip') || 'local';
+    const key = userId || request.headers.get('oai-authenticated-user-id') || request.headers.get('cf-connecting-ip') || 'local';
     const now = Date.now(), v = visits.get(key);
     if (v && now - v.at < 60000 && v.count >= 20) return json({ error: 'Bạn gửi quá nhanh. Vui lòng thử lại sau một phút.' }, 429);
     if (visits.size > 10000) visits.clear();

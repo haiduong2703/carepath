@@ -4,7 +4,8 @@ import type { Env } from '../server/assistant';
 import type { ChatRequest, ChatResult } from '../src/shared';
 import { handleApi } from './http-adapter';
 export async function createEvaluationHttp(env: Env) {
-  const server = createServer((req, res) => { void handleApi(req, res, env); });
+  // Isolated loopback-only model evaluation; auth is covered separately by auth.test.ts.
+  const server = createServer((req, res) => { void handleApi(req, res, { ...env, AUTH_MODE:'disabled' }); });
   await new Promise<void>((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', () => { server.off('error', reject); resolve(); }); });
   const baseUrl = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
   return {

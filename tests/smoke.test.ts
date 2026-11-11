@@ -16,7 +16,7 @@ let baseUrl: string;
 beforeAll(async () => {
   // Không dùng khóa thật ngay cả khi người chạy đã đặt khóa trong terminal.
   vi.stubEnv('ANTHROPIC_API_KEY', undefined);
-  server = createServer((req, res) => { void handleApi(req, res); });
+  server = createServer((req, res) => { void handleApi(req, res, { AUTH_MODE:'disabled' }); });
   await new Promise<void>((resolve, reject) => {
     server.once('error', reject);
     server.listen(0, '127.0.0.1', () => {

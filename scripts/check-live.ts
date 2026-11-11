@@ -64,7 +64,7 @@ async function main() {
     await save(); process.exitCode = 1; return;
   }
 
-  const server = createServer((req, res) => { void handleApi(req, res); });
+  const server = createServer((req, res) => { void handleApi(req, res, { ...process.env, AUTH_MODE:'disabled' }); });
   const measured: { latencyMs: number; inputTokens: number; outputTokens: number }[] = [];
   try {
     await new Promise<void>((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', () => { server.off('error', reject); resolve(); }); });

@@ -1,0 +1,148 @@
+{
+  "status": "live-incomplete",
+  "generatedAt": "2026-11-11T09:01:10.567Z",
+  "completedAt": "2026-11-11T09:05:04.308Z",
+  "provider": "anthropic",
+  "model": "claude-haiku-5-5",
+  "reasoning": "low",
+  "thinking": "disabled",
+  "judgeModel": "claude-haiku-5-5",
+  "judgeEffort": "medium",
+  "evaluationMode": "rejudge-recorded-http-responses",
+  "responsesGeneratedAt": "2026-11-11T08:52:14.326Z",
+  "casesVersion": "carepath-cases-v2",
+  "casesSha256": "9a06262ad680712696539b4f2ebe20eb68ccffe3422af729902e0f9c28a6c177",
+  "rubricVersion": "carepath-judge-v3",
+  "appFactsVersion": "carepath-app-facts-v1",
+  "appFactsSha256": "5a24dd0fb8bf212597da4654d44f57bd58e064db5c102b67b15895f35c73b9be",
+  "datasetSha256": "a24b1ace81c758e5cf957d52548c28f0ae3b1b87e4375eb41753389a4fd55cda",
+  "measurement": "localhost-http-full-json-response",
+  "scoringRule": "all-four-scores-at-least-4-and-rule-checks",
+  "passFlagSource": "computed-from-scores",
+  "total": 120,
+  "llmJudged": 119,
+  "rulesPassed": 120,
+  "judgePassed": 116,
+  "judgeErrors": 1,
+  "llmTurns": 82,
+  "safetyTurns": 36,
+  "lookupTurns": 2,
+  "fallbackTurns": 0,
+  "transportErrors": 0,
+  "meanLatencyMs": 1541.2833333333333,
+  "meanServiceLatencyMs": 1537.175,
+  "p50LatencyMs": 2090,
+  "p95LatencyMs": 2561,
+  "meanInputTokens": 2619.5916666666667,
+  "meanOutputTokens": 263.43333333333334,
+  "latencyPass": true,
+  "inputPass": true,
+  "outputPass": true,
+  "offlineLookupMeanMs": null,
+  "llmOnly": {
+    "total": 82,
+    "meanHttpLatencyMs": 2253.2073170731705,
+    "meanServiceLatencyMs": 2249.5243902439024,
+    "meanInputTokens": 3833.548780487805,
+    "meanOutputTokens": 385.5121951219512
+  },
+  "groups": [
+    {
+      "group": "doctor",
+      "total": 10,
+      "rulesPassed": 10,
+      "judged": 10,
+      "passed": 9
+    },
+    {
+      "group": "facility",
+      "total": 10,
+      "rulesPassed": 10,
+      "judged": 10,
+      "passed": 10
+    },
+    {
+      "group": "specialty",
+      "total": 10,
+      "rulesPassed": 10,
+      "judged": 10,
+      "passed": 9
+    },
+    {
+      "group": "service",
+      "total": 10,
+      "rulesPassed": 10,
+      "judged": 10,
+      "passed": 10
+    },
+    {
+      "group": "location",
+      "total": 10,
+      "rulesPassed": 10,
+      "judged": 10,
+      "passed": 10
+    },
+    {
+      "group": "booking",
+      "total": 10,
+      "rulesPassed": 10,
+      "judged": 10,
+      "passed": 9
+    },
+    {
+      "group": "factuality",
+      "total": 10,
+      "rulesPassed": 10,
+      "judged": 10,
+      "passed": 10
+    },
+    {
+      "group": "medical",
+      "total": 10,
+      "rulesPassed": 10,
+      "judged": 10,
+      "passed": 10
+    },
+    {
+      "group": "emergency",
+      "total": 10,
+      "rulesPassed": 10,
+      "judged": 10,
+      "passed": 10
+    },
+    {
+      "group": "privacy",
+      "total": 10,
+      "rulesPassed": 10,
+      "judged": 10,
+      "passed": 10
+    },
+    {
+      "group": "injection",
+      "total": 10,
+      "rulesPassed": 10,
+      "judged": 10,
+      "passed": 10
+    },
+    {
+      "group": "conversation",
+      "total": 10,
+      "rulesPassed": 10,
+      "judged": 9,
+      "passed": 9
+    }
+  ],
+  "judgeTokenTotals": {
+    "input": 505991,
+    "output": 25434
+  },
+  "baseline": {
+    "archive": "reports/history/2026-11-11T08-52-14-326Z",
+    "generatedAt": "2026-11-11T08:52:14.326Z",
+    "total": 120,
+    "judgePassed": 104,
+    "rubricVersion": "carepath-judge-v2",
+    "measurement": "localhost-http-full-json-response"
+  },
+  "note": "CHẤM LẠI đáp án HTTP đã ghi nhận: không gọi lại trợ lý và không đo lại thời gian/token hội thoại. Xem responsesGeneratedAt để biết thời điểm gốc. Đo qua HTTP localhost từ trước fetch đến sau khi đọc JSON đầy đủ. Chưa gồm Internet/trình duyệt của người dùng. Thời gian service ghi riêng; không tính judge và nhịp chờ giới hạn tốc độ. Token lấy từ usage API; lượt quy tắc dùng 0, lượt lỗi không biết usage giữ null. Token judge tách riêng. Cùng họ mô hình chấm có thể thiên lệch; cần rà mẫu thủ công. Các phiên bản thay rubric/cách đo nên không thể quy mọi thay đổi điểm cho mô hình."
+}

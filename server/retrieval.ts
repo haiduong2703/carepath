@@ -27,12 +27,16 @@ export function search(query: string, opts: { city?: string; type?: RecordType |
   const terms = [...new Set(tokens(expanded))];
   const city = opts.city || inferCity(query);
   if (/da nang|\bhue\b|can tho|hai phong/.test(nq) && !city) return [];
-  const filtered = records.filter(r => (!opts.type || r.type === opts.type) && (!city || r.city === city || r.city === 'Toàn quốc'));
+  let filtered = records.filter(r => (!opts.type || r.type === opts.type) && (!city || r.city === city || r.city === 'Toàn quốc'));
   // A known full personal name is an entity lookup, not a bag-of-words query.
   // Common tokens such as Ha (Hanoi) and Van (consultation) must not pull in
   // unrelated profiles. Keep explicit city/type filters even for named entities.
   const namedDoctors = records.filter(r => r.type === 'doctor' && nq.includes(normalize(r.name).split(' ').slice(-3).join(' ')));
   if (namedDoctors.length) return filtered.filter(r => namedDoctors.includes(r)).slice(0, opts.limit ?? 4);
+  // Match an explicitly named specialty as a phrase before scoring individual
+  // words (e.g. "cứu" alone must not make an unrelated profile relevant).
+  const requestedSpecialties = records.filter(r => r.type === 'specialty' && nq.includes(normalize(r.name))).map(r => normalize(r.name));
+  if (requestedSpecialties.length) filtered = filtered.filter(r => requestedSpecialties.some(s => normalize(`${r.name} ${r.specialties.join(' ')} ${r.excerpt}`).includes(s)));
   if (!query.trim()) {
     const featured = opts.type ? filtered : (['doctor', 'facility', 'service', 'specialty'] as const).flatMap(t => filtered.filter(r => r.type === t).slice(0, 3));
     return [...featured, ...filtered.filter(r => !featured.includes(r))].slice(0, opts.limit ?? 6);

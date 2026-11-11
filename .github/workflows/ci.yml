@@ -10,6 +10,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: node scripts/check-secrets.mjs
       - run: npm test
       - run: npm run eval:offline
       - run: npm run build

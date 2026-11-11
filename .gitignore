@@ -10,3 +10,4 @@ coverage/
 *.log
 screenshots/
 server/assets.generated.ts
+reports/*partial.json

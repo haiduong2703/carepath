@@ -5,9 +5,9 @@
 ## Trạng thái bàn giao
 
 - Website có tìm kiếm, bộ lọc khu vực/loại hồ sơ, xem nguồn, hội thoại và trang hỗ trợ đặt lịch.
-- Chưa có khóa API theo lựa chọn của người dùng: mặc định chạy **tra cứu**, không gắn nhãn đây là phản hồi LLM.
-- Đã có pipeline Claude Haiku 5.5 qua LangChain và chương trình LLM-as-judge. **Chưa có kết quả đánh giá LLM thực tế**. Xem `reports/offline-report.md`; các chỉ số LLM để trống thay vì ước lượng hoặc bịa số.
-- Chưa có repository GitHub do người dùng cung cấp. Hướng dẫn đưa mã lên GitHub ở dưới; không có tuyên bố đã push GitHub.
+- Hội thoại và LLM-as-judge dùng Claude Haiku 5.5 qua LangChain. Mỗi môi trường cần tự cấu hình `ANTHROPIC_API_KEY`; nếu thiếu khóa thì chạy **tra cứu**, không gắn nhãn phản hồi đó là LLM.
+- Báo cáo thực tế: [live-report.md](reports/live-report.md), [JSON từng ca](reports/live-results.json), [CSV](reports/live-results.csv). Báo cáo ghi riêng ca không đạt và các giới hạn của phép đo.
+- Website: https://carepath-bookingcare-assistant.finitejet1.chatgpt.site (riêng tư theo quyền Sites). Repository: https://github.com/haiduong2703/carepath.
 - Đặt lịch bằng cách chuyển sang hồ sơ chính thức. Không có API ghi lịch được BookingCare cấp, nên CarePath không tạo, hủy, đổi hoặc xác nhận lịch hẹn.
 
 ## Chạy trên máy
@@ -69,7 +69,7 @@ Khi đã đặt khóa trong `.env`, chạy `npm run test:live` để thử kết
 | Trung bình ≤30.000 input token | Top 4 hồ sơ, lịch sử tối đa 6 tin; chặn >28.000 byte UTF-8 nội dung prompt, chừa overhead | Chỉ kết luận bằng `usage_metadata` thực tế |
 | Trung bình ≤500 output token | `maxTokens=500` chuyển thành `max_tokens` trong Claude Messages API; không bật thinking | Usage thực tế, lỗi/thiếu usage giữ `null` |
 
-Timeout/fallback không chứng minh chất lượng LLM đạt yêu cầu; báo cáo nêu số lượt lỗi. Độ trễ đo trong service chưa gồm browser/HTTP, nên chưa tuyên bố đạt SLA từ kết quả cục bộ. Claude Haiku 5.5 được cấu hình `thinking: { type: 'disabled' }` và `outputConfig: { effort: 'low' }` để ưu tiên tốc độ trong ngân sách 500 token. Có thể đổi effort thành `medium`; phải đo lại chất lượng và thời gian. Không gửi `temperature`, `top_p`, `top_k` hoặc tham số dành cho Responses API.
+Timeout/fallback không chứng minh chất lượng LLM đạt yêu cầu; báo cáo nêu số lượt lỗi. Bản đánh giá v2 đo qua HTTP localhost tới khi đọc đủ JSON, đồng thời ghi thời gian service riêng; chưa gồm Internet/trình duyệt người dùng. Claude Haiku 5.5 được cấu hình `thinking: { type: 'disabled' }` và `outputConfig: { effort: 'low' }` để ưu tiên tốc độ trong ngân sách 500 token. Có thể đổi effort thành `medium`; phải đo lại chất lượng và thời gian. Không gửi `temperature`, `top_p`, `top_k` hoặc tham số dành cho Responses API.
 
 Tài liệu: [Claude Haiku 5.5](https://platform.claude.com/docs/en/models/haiku-5-5/overview), [effort](https://platform.claude.com/docs/en/build-with-claude/effort), [LangChain ChatAnthropic](https://docs.langchain.com/oss/javascript/integrations/chat/anthropic). Hội thoại và LLM-as-judge đều dùng Anthropic. Ứng dụng không đọc khóa `OPENAI_API_KEY` và không tự chuyển sang nhà cung cấp cũ khi Claude lỗi.
 
@@ -94,8 +94,18 @@ Chọn hồ sơ → “Hỗ trợ đặt lịch” → chọn ngày mong muốn 
 `evals/cases.ts` có 12 nhóm × 10 ca viết cụ thể: bác sĩ; cơ sở; chuyên khoa; dịch vụ; địa điểm; đặt lịch; tính đúng dữ kiện; yêu cầu y khoa; cấp cứu; riêng tư; prompt injection; hội thoại nối tiếp.
 
 1. `eval:offline`: kiểm tra nguồn đích/top 4, khu vực, một số ý định, điều kiện bắt buộc và nguồn cho phép. Không đánh giá tự động đầy đủ nội dung kỳ vọng.
-2. `eval:live`: chạy cùng 120 ca qua service, sau đó dùng Claude Haiku 5.5 làm judge với JSON Schema. Chấm groundedness, relevance, safety và bookingHonesty từ 1–5. Đạt khi mọi mục ≥4, judge đồng ý và rule check đạt.
-3. Báo cáo lưu JSON từng ca, CSV, Markdown và `summary.json`. Token judge tách khỏi token hội thoại. Lỗi usage giữ `null`; lỗi judge không tính như đạt. Cùng mô hình chấm có thể thiên lệch; cần rà thủ công một mẫu.
+2. `eval:live`: chạy cùng 120 ca qua HTTP thật, sau đó dùng Claude Haiku 5.5 làm judge với JSON Schema. Chấm groundedness, relevance, safety và bookingHonesty từ 1–5. Đạt khi mọi mục ≥4 và rule check đạt. Rubric v3 để chương trình suy ra `passed` từ bốn điểm, không để cờ boolean độc lập mâu thuẫn với chính điểm chấm.
+3. `server/app-facts.ts` xác minh riêng hành vi ứng dụng như lưu phiên, gửi Anthropic và giới hạn đặt lịch. Judge được cung cấp căn cứ này nhưng không được dùng để suy ra dữ kiện y tế hoặc mặc định cho điểm đạt. Câu hỏi thiếu địa điểm được phép hỏi làm rõ; vẫn trừ điểm nếu trả lời lạc đề hoặc bịa cơ sở.
+4. Báo cáo lưu JSON từng ca, CSV, Markdown và `summary.json`. Có số liệu toàn bộ lượt, riêng lượt Claude, thời gian HTTP và service, p50/p95. Token judge tách khỏi token hội thoại. Lỗi usage giữ `null`; lỗi judge không tính như đạt. Cùng mô hình chấm có thể thiên lệch; cần rà thủ công một mẫu.
+5. Kết quả live trước đó tự được giữ nguyên trong `reports/history/`. Phiên bản câu hỏi, rubric, APP_FACTS và snapshot có mã phiên bản/SHA-256. Rubric v2 đã sửa kỳ vọng nhà cung cấp và bổ sung căn cứ nên điểm trước/sau không phải thí nghiệm chỉ thay mô hình.
+
+`npm run eval:calibrate` gọi judge ở effort medium trên bốn đáp án đúng/sai mẫu (có tính phí), lưu `judge-calibration.json`; không cộng mẫu vào 120 ca. Rubric v3 đánh số nguồn rõ ràng, đọc cả excerpt khi metadata chuyên khoa trống, phân biệt thiếu sót nhỏ (4 điểm) với thiếu đáng kể (3 điểm). Mẫu calibration ban đầu thiếu nguồn châm cứu được giữ tại `judge-calibration-initial.json` để truy vết.
+
+`npm run eval:rejudge` chỉ chấm lại 120 đáp án HTTP đã ghi nhận, không gọi lại trợ lý. Lệnh từ chối khi hash câu hỏi, dữ liệu hoặc APP_FACTS khác bản ghi. Báo cáo ghi rõ chế độ chấm lại và `responsesGeneratedAt`; số thời gian/token hội thoại giữ từ lần đo gốc. Cần chạy `eval:live` mới nếu thay code phản hồi. Cả hai lệnh dùng judge effort medium (trong giới hạn đề bài), thinking disabled và tối đa 500 output token.
+
+`npm run eval:retry-errors` chỉ gọi lại các ca judge bị lỗi API/timeout/schema, không chấm lại những ca đã có điểm (kể cả điểm không đạt). Cần cùng rubric và hash dữ liệu/câu hỏi/APP_FACTS. Báo cáo ghi số kết quả giữ lại và số yêu cầu judge mới; bản lỗi được lưu trong history. Tổng token judge của báo cáo ghép gồm usage đã biết của các kết quả giữ lại, không phải hóa đơn riêng của lần retry.
+
+Cả hai lệnh eval giữ nhịp tối thiểu 3,1 giây giữa các lượt để tôn trọng giới hạn 20 chat/phút của một client; thời gian chờ và chấm không tính vào độ trễ hội thoại. Mỗi lần chạy đủ 120 ca có thể mất vài phút. Offline ghi `offline-summary.json` và không ghi đè `summary.json` live. Live có checkpoint `live-results.partial.json` (không đưa lên Git) để xem tiến độ khi chạy.
 
 Lệnh trả mã lỗi nếu có lỗi cấu trúc hoặc judge không hoàn tất. Điểm chất lượng và từng ngưỡng SLA được ghi riêng; xem kết quả thay vì chỉ dựa vào exit code. Không dùng kết quả offline để tuyên bố Claude Haiku 5.5 đạt yêu cầu.
 
@@ -118,32 +128,34 @@ Hội thoại chỉ giữ trong React memory; không database hoặc localStorag
 src/                     React, giao diện tiếng Việt, kiểu dữ liệu chung
 server/retrieval.ts      Chuẩn hóa tiếng Việt, BM25, bộ lọc
 server/assistant.ts      Guardrails, prompt, LangChain, ngân sách, usage
+server/app-facts.ts      Hành vi ứng dụng được xác minh, phản hồi riêng tư/lịch
 server/api.ts            Validation, API, rate limit
 server/worker.ts         Entrypoint Cloudflare Worker và assets
 scripts/ingest.ts        Crawler công khai có giới hạn
 scripts/evaluate.ts      120 ca, LLM-as-judge, JSON/CSV/Markdown
 evals/cases.ts           Câu hỏi và kỳ vọng
+evals/judge.ts           Rubric và JSON Schema, phân biệt APP_FACTS/nguồn y tế
+evals/metrics.ts         Thống kê HTTP/service, toàn bộ lượt/riêng Claude
 tests/assistant.test.ts  Retrieval, safety, context, API contract
 data/                    Snapshot có nguồn
-reports/                 Báo cáo đo được và trạng thái chưa chạy
+reports/                 Báo cáo đo được, lỗi cụ thể và lịch sử lần trước
 ```
 
 ## Đưa mã nguồn lên GitHub
 
-Tạo repository rỗng trên GitHub, rồi trong thư mục mã nguồn đã giải nén:
+Lấy mã nguồn từ repository:
 
 ```powershell
-git init -b main
-git add .
-git commit -m "Build CarePath BookingCare assistant"
-git remote add origin https://github.com/YOUR_ACCOUNT/carepath.git
-git push -u origin main
+git clone https://github.com/haiduong2703/carepath.git
+cd carepath
+npm ci
+Copy-Item .env.example .env
+npm run dev
 ```
 
 Nếu checkout hiện tại đã có remote của Sites, dùng bản ZIP bàn giao hoặc đặt tên remote khác như `github` để giữ remote Sites. Không commit `.env`. Trên GitHub, workflow CI tự cài phụ thuộc từ lockfile, chạy test và build. Không chạy API có tính phí trong CI mặc định.
 
 ## Những phần còn cần tài khoản của bạn
 
-1. Đặt ANTHROPIC_API_KEY trên máy chủ và chạy `npm run eval:live` để có báo cáo LLM-as-judge thực tế ≥100 ca, số token và độ trễ.
-2. Tạo repository GitHub và push mã nguồn theo hướng dẫn.
-3. Nếu cần đặt lịch hoàn toàn bên trong ứng dụng, cần API/ủy quyền tích hợp chính thức từ BookingCare; không thể thực hiện bằng dữ liệu công khai đơn thuần.
+1. Mỗi máy hoặc website triển khai cần cấu hình khóa Anthropic riêng ở môi trường máy chủ; khóa cục bộ không tự chuyển lên Sites/GitHub.
+2. Nếu cần đặt lịch hoàn toàn bên trong ứng dụng, cần API/ủy quyền tích hợp chính thức từ BookingCare; không thể thực hiện bằng dữ liệu công khai đơn thuần.

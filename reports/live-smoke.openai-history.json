@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-11-10T16:15:48.161Z",
+  "status": "preflight-failed",
+  "model": "gpt-5.4",
+  "reasoning": "none",
+  "preflight": {
+    "ok": false,
+    "latencyMs": 1462,
+    "status": 429,
+    "code": "credit_balance_exhausted",
+    "type": "insufficient_quota",
+    "messageSuggestsQuota": false,
+    "timeout": false,
+    "hint": "Tài khoản hoặc project API không còn hạn mức sử dụng; kiểm tra credits và giới hạn project/organization."
+  },
+  "scenarios": []
+}

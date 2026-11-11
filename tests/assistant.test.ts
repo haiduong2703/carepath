@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { AIMessage } from '@langchain/core/messages';
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { respond, createModel, reasoning, redact } from '../server/assistant';
 import { search, records } from '../server/retrieval';
 import { api } from '../server/api';
@@ -27,14 +27,29 @@ describe('Conversation and safety', () => {
   it('does not label lookup as AI', async () => { const r = await respond({ message: 'Tìm Hà Văn Quyết' }); expect(r.mode).toBe('lookup'); expect(r.metrics.model).toBeNull(); expect(r.notice).toContain('không do LLM'); });
   it('uses the prior need on a city follow-up', async () => { const r = await respond({ message: 'Hà Nội', history: [{ role: 'user', content: 'Tìm bác sĩ tiêu hóa' }] }); expect(r.sources.some(s => s.id === 'i56' || s.id === 's22')).toBe(true); });
   it('redacts common identifiers before sending model context', () => { const r = redact('email me test@example.com phone 0912345678 CCCD 012345678901'); expect(r).not.toContain('test@example.com'); expect(r).not.toContain('0912345678'); expect(r).not.toContain('012345678901'); });
-  it('enforces the requested model/effort/output policy', () => { const m = createModel({ OPENAI_API_KEY: 'test-only' }); expect(m.model).toBe('gpt-5.4'); expect(m.maxTokens).toBe(500); expect(reasoning({})).toBe('none'); expect(() => reasoning({ REASONING_EFFORT: 'high' })).toThrow(); });
+  it('enforces the requested model/effort/output policy', () => {
+    const m = createModel({ ANTHROPIC_API_KEY: 'test-only' });
+    expect(m.model).toBe('claude-haiku-5-5'); expect(m.maxTokens).toBe(500);
+    expect(m.thinking).toEqual({ type: 'disabled' }); expect(m.outputConfig).toEqual({ effort: 'low' });
+    expect(reasoning({})).toBe('low'); expect(reasoning({ CLAUDE_EFFORT: 'medium' })).toBe('medium');
+    for (const value of ['none', 'high', 'xhigh', 'max']) expect(() => reasoning({ CLAUDE_EFFORT: value })).toThrow();
+    expect(() => createModel({ ANTHROPIC_API_KEY: 'test-only' }, 501)).toThrow();
+    expect(() => createModel({})).toThrow('ANTHROPIC_API_KEY');
+  });
+  it('keeps lookup mode when only a legacy provider key is present', async () => {
+    const env = { OPENAI_API_KEY: 'legacy-test-only', ANTHROPIC_API_KEY: undefined };
+    const result = await respond({ message: 'Tìm Hà Văn Quyết' }, env);
+    expect(result.mode).toBe('lookup'); expect(result.metrics.model).toBeNull();
+    const health = await api(new Request('http://localhost/api/health'), env);
+    expect(await health.json()).toMatchObject({ provider: 'anthropic', llmConfigured: false, model: null });
+  });
   it('includes real source context and question in a live prompt and records provider usage', async () => {
-    const invoke = vi.spyOn(ChatOpenAI.prototype, 'invoke').mockResolvedValue(new AIMessage({ content: 'Thông tin tiêu hóa [1].', usage_metadata: { input_tokens: 120, output_tokens: 35, total_tokens: 155 } }) as never);
-    const r = await respond({ message: 'Tìm bác sĩ Hà Văn Quyết' }, { OPENAI_API_KEY: 'test-only' });
+    const invoke = vi.spyOn(ChatAnthropic.prototype, 'invoke').mockResolvedValue(new AIMessage({ content: 'Thông tin tiêu hóa [1].', usage_metadata: { input_tokens: 120, output_tokens: 35, total_tokens: 155 } }) as never);
+    const r = await respond({ message: 'Tìm bác sĩ Hà Văn Quyết' }, { ANTHROPIC_API_KEY: 'test-only' });
     const prompt = JSON.stringify(invoke.mock.calls[0][0]); expect(prompt).toContain('Hà Văn Quyết'); expect(prompt).not.toContain('{context}'); expect(prompt).not.toContain('{question}');
     expect(r.mode).toBe('llm'); expect(r.metrics.inputTokens).toBe(120); expect(r.metrics.outputTokens).toBe(35);
   });
-  it('does not manufacture zero usage on provider failure', async () => { vi.spyOn(ChatOpenAI.prototype, 'invoke').mockRejectedValue(new Error('timeout')); const r = await respond({ message: 'Thông tin Hà Văn Quyết' }, { OPENAI_API_KEY: 'test-only' }); expect(r.mode).toBe('fallback'); expect(r.metrics.inputTokens).toBeNull(); expect(r.metrics.outputTokens).toBeNull(); });
+  it('does not manufacture zero usage on provider failure', async () => { vi.spyOn(ChatAnthropic.prototype, 'invoke').mockRejectedValue(new Error('timeout')); const r = await respond({ message: 'Thông tin Hà Văn Quyết' }, { ANTHROPIC_API_KEY: 'test-only' }); expect(r.mode).toBe('fallback'); expect(r.metrics.inputTokens).toBeNull(); expect(r.metrics.outputTokens).toBeNull(); });
 });
 describe('HTTP contract', () => {
   const post = (body: unknown, extra: Record<string, string> = {}) => new Request('http://localhost/api/chat', { method: 'POST', headers: { 'content-type': 'application/json', 'oai-authenticated-user-id': Math.random().toString(), ...extra }, body: JSON.stringify(body) });

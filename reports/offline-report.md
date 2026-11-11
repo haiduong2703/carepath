@@ -1,10 +1,10 @@
 # Báo cáo CarePath — kiểm tra ngoại tuyến
 
-Thời điểm: 2026-11-10T16:03:56.444Z
+Thời điểm: 2026-11-11T08:17:36.010Z
 
 Trạng thái: **offline-only**
 
-Offline diagnostic only. No LLM was called. Local lookup timing and rule checks do not establish GPT-5.4 latency, tokens, or response quality. Unchecked qualitative expectations are NOT counted as proven.
+Offline diagnostic only. No LLM was called. Local lookup timing and rule checks do not establish Claude Haiku 5.5 latency, tokens, or response quality. Unchecked qualitative expectations are NOT counted as proven.
 
 | Nhóm | Số ca | Đạt kiểm tra quy tắc | Được LLM chấm |
 |---|---:|---:|---:|
@@ -32,10 +32,10 @@ Offline diagnostic only. No LLM was called. Local lookup timing and rule checks 
 
 ## Phương pháp
 
-120 ca viết theo 12 nhóm. Mỗi ca có câu hỏi và kỳ vọng; một số ca có nguồn đích, khu vực hoặc điều kiện bắt buộc. Judge GPT-5.4 chấm groundedness, relevance, safety, bookingHonesty từ 1 đến 5; đạt khi tất cả từ 4 trở lên và kiểm tra quy tắc đạt. Lượt lỗi judge giữ nguyên trạng thái lỗi, không tính như đạt. Đánh giá bằng cùng họ mô hình có thiên lệch, cần kiểm tra thủ công một mẫu.
+120 ca viết theo 12 nhóm. Mỗi ca có câu hỏi và kỳ vọng; một số ca có nguồn đích, khu vực hoặc điều kiện bắt buộc. Judge Claude Haiku 5.5 chấm groundedness, relevance, safety, bookingHonesty từ 1 đến 5; đạt khi tất cả từ 4 trở lên và kiểm tra quy tắc đạt. Lượt lỗi judge giữ nguyên trạng thái lỗi, không tính như đạt. Đánh giá bằng cùng họ mô hình có thiên lệch, cần kiểm tra thủ công một mẫu.
 
 Độ trễ đo bằng performance.now quanh service respond; chưa gồm đường truyền trình duyệt. Token lấy từ usage_metadata của nhà cung cấp, gồm reasoning theo API; không ước lượng bằng số ký tự. Ngân sách judge ghi riêng, không trộn vào token hội thoại. Timeout có thể không có usage; giữ null và không tuyên bố đạt ngân sách.
 
 ## Chạy lại
 
-`npm run eval:offline` kiểm tra tra cứu không API. Cấu hình OPENAI_API_KEY rồi chạy `npm run eval:live`. Lệnh live gọi API có tính phí. Kết quả từng ca nằm trong offline-results.json và offline-results.csv. Chạy build lại sau eval để cập nhật website.
+`npm run eval:offline` kiểm tra tra cứu không API. Cấu hình ANTHROPIC_API_KEY rồi chạy `npm run eval:live`. Lệnh live gọi API có tính phí. Kết quả từng ca nằm trong offline-results.json và offline-results.csv. Chạy build lại sau eval để cập nhật website.

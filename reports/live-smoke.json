@@ -1,0 +1,11 @@
+{
+  "generatedAt": "2026-11-11T08:17:41.351Z",
+  "status": "missing-key",
+  "model": "claude-haiku-5-5",
+  "reasoning": "low",
+  "preflight": {
+    "ok": false,
+    "hint": "Thiếu ANTHROPIC_API_KEY. Đặt khóa trong .env, không phải .env.example."
+  },
+  "scenarios": []
+}

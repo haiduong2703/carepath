@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { records, search } from './retrieval';
-import { respond, type Env } from './assistant';
+import { respond, MODEL, type Env } from './assistant';
 import ingestion from '../data/ingestion.json';
 import evaluation from '../reports/summary.json';
 const chatSchema = z.object({
@@ -13,7 +13,10 @@ const headers = { 'content-type': 'application/json; charset=utf-8', 'cache-cont
 const json = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers });
 export async function api(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
-  if (url.pathname === '/api/health' && request.method === 'GET') return json({ ok: true, llmConfigured: !!env.OPENAI_API_KEY, mode: env.OPENAI_API_KEY ? 'llm' : 'lookup', model: env.OPENAI_API_KEY ? 'gpt-5.4' : null, totalRecords: records.length, ingestion });
+  if (url.pathname === '/api/health' && request.method === 'GET') {
+    const configured = !!env.ANTHROPIC_API_KEY?.trim();
+    return json({ ok: true, llmConfigured: configured, provider: 'anthropic', mode: configured ? 'llm' : 'lookup', model: configured ? MODEL : null, totalRecords: records.length, ingestion });
+  }
   if (url.pathname === '/api/evaluation' && request.method === 'GET') return json(evaluation);
   if (url.pathname === '/api/search' && request.method === 'GET') {
     const q = (url.searchParams.get('q') || '').slice(0, 200);

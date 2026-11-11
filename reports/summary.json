@@ -1,10 +1,12 @@
 {
   "status": "offline-only",
-  "generatedAt": "2026-11-10T16:03:56.444Z",
+  "generatedAt": "2026-11-11T08:17:36.010Z",
   "total": 120,
   "llmJudged": 0,
+  "provider": "anthropic",
   "model": null,
   "reasoning": null,
+  "thinking": null,
   "judgeModel": null,
   "datasetSha256": "a24b1ace81c758e5cf957d52548c28f0ae3b1b87e4375eb41753389a4fd55cda",
   "rulesPassed": 120,
@@ -20,6 +22,6 @@
   "latencyPass": null,
   "inputPass": null,
   "outputPass": null,
-  "offlineLookupMeanMs": 1.9416666666666667,
-  "note": "Offline diagnostic only. No LLM was called. Local lookup timing and rule checks do not establish GPT-5.4 latency, tokens, or response quality. Unchecked qualitative expectations are NOT counted as proven."
+  "offlineLookupMeanMs": 1.8,
+  "note": "Offline diagnostic only. No LLM was called. Local lookup timing and rule checks do not establish Claude Haiku 5.5 latency, tokens, or response quality. Unchecked qualitative expectations are NOT counted as proven."
 }

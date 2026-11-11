@@ -23,7 +23,9 @@
     "eval:retry-errors": "tsx --env-file-if-exists=.env scripts/evaluate.ts --retry-judge-errors",
     "eval:calibrate": "tsx --env-file-if-exists=.env scripts/calibrate-judge.ts",
     "db:generate": "drizzle-kit generate",
-    "test:auth": "vitest run tests/auth.test.ts --reporter=verbose"
+    "test:auth": "vitest run tests/auth.test.ts --reporter=verbose",
+    "test:hosted": "tsx scripts/check-hosted.ts",
+    "data:format": "tsx scripts/format-excerpts.ts"
   },
   "dependencies": {
     "@langchain/anthropic": "^1.6.3",
@@ -32,6 +34,7 @@
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0",
     "zod": "^4.0.0"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
 export type RecordType = 'doctor' | 'facility' | 'specialty' | 'service';
 export interface CareRecord {
   id: string; name: string; type: RecordType; city: string;
-  specialties: string[]; summary: string; excerpt: string;
+  specialties: string[]; summary: string; excerpt: string; displayExcerpt?: string;
   url: string; fetchedAt: string; contentHash: string;
 }
 export interface ChatMessage { role: 'user' | 'assistant'; content: string }

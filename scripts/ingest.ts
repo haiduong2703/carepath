@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import type { CareRecord, RecordType } from '../src/shared';
+import { readableSourceText } from './source-text';
 
 const origin = 'https://bookingcare.vn';
 const pause = (ms: number) => new Promise(r => setTimeout(r, ms));
@@ -54,7 +55,7 @@ for (const [url, { type, label }] of candidates) {
     const html = await get(url), $ = load(html);
     $('script, style, nav, footer, header, noscript').remove();
     const name = clean($('h1').first().text()) || label.slice(0, 150);
-    let body = clean($('body').text());
+    let body = readableSourceText(html);
     const index = body.indexOf(name);
     body = body.slice(index >= 0 ? index : 0);
     body = body.split(/Phản hồi của bệnh nhân|Đánh giá của người bệnh|Người bệnh nói gì/i)[0];

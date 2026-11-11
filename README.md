@@ -32,6 +32,8 @@ PORT=8787
 
 Khởi động lại `npm run dev`. Không đặt khóa trong biến `VITE_*`, mã React, GitHub, ảnh chụp hoặc chat. `.env` được Git bỏ qua. Đối với website Sites đã triển khai, cấu hình bí mật `ANTHROPIC_API_KEY` trong môi trường máy chủ; khóa cục bộ không tự chuyển sang website.
 
+Website hiện đã được cấu hình khóa Claude ở môi trường máy chủ dưới dạng secret. Không có khóa trong bundle React hoặc mã nguồn GitHub. `/api/health` chỉ cho biết có cấu hình; `npm run test:hosted` mới xác minh câu trả lời thực tế với `mode: llm` và usage từ nhà cung cấp.
+
 ```powershell
 npm run test
 npm run eval:offline
@@ -69,6 +71,14 @@ File `tests/smoke.test.ts` tự mở server trên một cổng trống và đón
 Chạy tất cả test bằng `npm test`. Smoke test xác minh luồng ứng dụng và hợp đồng HTTP, không thay thế `npm run eval:live` để chấm chất lượng LLM.
 
 Khi đã đặt khóa trong `.env`, chạy `npm run test:live` để thử kết nối Claude Haiku 5.5 và ba câu hỏi qua HTTP thật. Lệnh này có thể gọi tối đa bốn yêu cầu LLM có tính phí; nếu kết nối đầu tiên lỗi thì dừng ngay. Kết quả nằm trong `reports/live-smoke.json`, không ghi khóa hoặc lỗi SDK thô. File `.env.example` chỉ là mẫu, ứng dụng không tự đọc khóa từ file này.
+
+`npm run test:hosted` kiểm tra website publish qua luồng đăng ký, cookie/CSRF, tìm kiếm, **3 câu hỏi Claude có tính phí** và đăng xuất. Kết quả ở `reports/hosted-smoke.json`; không ghi email/mật khẩu/tokens đăng nhập của tài khoản QA. Mỗi lần chạy tạo một tài khoản thử ngẫu nhiên trên hosted và chịu giới hạn 5 lần đăng ký/giờ/IP. Đổi đích bằng `CAREPATH_TEST_URL` nếu cần. Lệnh này không phải bộ đánh giá 120 ca hoặc LLM-as-judge.
+
+## Hiển thị trích đoạn và form chat
+
+`displayExcerpt` khôi phục xuống đoạn từ DOM của nguồn, tách heading/đoạn/danh sách, giữ nguyên `excerpt`, `contentHash`, metadata và ngữ cảnh LLM của snapshot đánh giá. Với 6 nguồn có danh sách gợi ý đã đổi thứ tự, giao diện chỉ hiện phần đầu khớp snapshot; không đưa dữ kiện mới vào bản cũ. Tái định dạng bằng `npm run data:format` (đọc trang công khai, có kiểm tra robots.txt). Khi chủ động cập nhật dữ liệu bằng `data:refresh`, bộ trích xuất mới giữ ranh giới đoạn ngay từ lúc lấy dữ liệu; cần đánh giá lại snapshot mới.
+
+Chat hiển thị Markdown theo danh sách phần tử cho phép, không chạy HTML hoặc tải ảnh/liên kết do mô hình sinh. Enter gửi sau khi kết thúc IME tiếng Việt, Shift+Enter xuống dòng; ô nhập tự giãn và chỉ vùng hội thoại cuộn. `tests/presentation.test.tsx` kiểm tra các lỗi định dạng và nhập liệu này. Công cụ browser QA không kết nối trong lần sửa này; chưa xác nhận bố cục bằng screenshot sau sửa.
 
 ## Ràng buộc mô hình và hiệu năng
 

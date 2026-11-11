@@ -1,0 +1,180 @@
+{
+  "generatedAt": "2026-11-11T10:02:34.237Z",
+  "url": "https://carepath-bookingcare-assistant.finitejet1.chatgpt.site",
+  "status": "hosted-smoke-complete",
+  "checks": {
+    "anonymousBlocked": true,
+    "registration": true,
+    "claudeConfigured": true,
+    "readableExcerpt": true,
+    "logout": true,
+    "blockedAfterLogout": true
+  },
+  "scenarios": [
+    {
+      "id": "doctor",
+      "message": "Bác sĩ Hà Văn Quyết khám chuyên khoa gì?",
+      "city": "Hà Nội",
+      "httpStatus": 200,
+      "endToEndLatencyMs": 2763,
+      "passed": true,
+      "result": {
+        "answer": "Theo hồ sơ nguồn [1], Giáo sư, Tiến sĩ Hà Văn Quyết (Hà Nội) được ghi nhận với chuyên khoa Tiêu hóa và Xét nghiệm. Hồ sơ cũng nhắc đến lĩnh vực Ngoại – Phẫu thuật nội soi tiêu hóa, ổ bụng và bệnh lý hậu môn, trực tràng, cùng việc khám các bệnh lý mạn tính như viêm đại tràng, hội chứng ruột kích thích và viêm dạ dày HP tái phát [1].\n\nDữ liệu hiện có là snapshot công khai, chưa xác minh lịch khám, địa chỉ cơ sở, giá hay lịch còn trống. Bạn có thể mở hồ sơ nguồn [1] để xem chi tiết, sau đó chọn ngày giờ trực tiếp trên BookingCare và chờ xác nhận chính thức từ hệ thống.",
+        "sources": [
+          {
+            "id": "i56",
+            "name": "Giáo sư, Tiến sĩ Hà Văn Quyết",
+            "type": "doctor",
+            "city": "Hà Nội",
+            "specialties": [
+              "Tiêu hóa",
+              "Xét nghiệm"
+            ],
+            "summary": "Hồ sơ bác sĩ · Tiêu hóa, Xét nghiệm. Thông tin công khai trên BookingCare.",
+            "excerpt": "Giáo sư, Tiến sĩ Hà Văn QuyếtGiáo sư, Tiến sĩ Hà Văn QuyếtChuyên gia hơn 40 năm kinh nghiệm trong lĩnh vực bệnh lý Tiêu hóa Nhiều năm kinh nghiệm trong việc điều trị các bệnh lý mạn tính như viêm đại tràng, hội chứng ruột kích thích, viêm dạ dày HP tái phát,... Nguyên Giám đốc Bệnh viện Đại học Y Hà NộiHà NộiHỏi sâu thêmGiáo sư, Tiến sĩ, Bác sĩ Hà Văn Quyết Chuyên ngành Ngoại – Phẫu thuật Nội soi Tiêu hóa, Ổ bụng & các bệnh lý hậu môn, trực tràng Nguyên Chủ nhiệm Bộ môn Ngoại - Đại học Y Hà Nội Nguyên Giám đốc Bệnh viện Đại học Y Hà Nội Nguyên Phó Giám đốc Bệnh viện Việt Đức Nhiều năm kinh nghiệm trong việc điều trị các bệnh lý mạn tính như viêm đại tràng, hội chứng ruột kích thích, viêm dạ dày HP tái phát,... Trực tiếp thực hiện các kỹ thuật nội soi bao gồm nội soi dạ dày, đại tràng Bác sĩ dành thời gian để giải thích rõ tình trạng bệnh và phác đồ điều trị, giúp người bệnh an tâm và hiểu rõ quá trình chăm sóc sức khỏe Khám và điều trị Giáo sư nhận khám, điều trị các bệnh lý khó về Tiê",
+            "url": "https://bookingcare.vn/dich-vu-y-te/kham-chuyen-khoa/giao-su-tien-si-ha-van-quyet-i56",
+            "fetchedAt": "2026-11-10T15:09:06.264Z",
+            "contentHash": "11e6f84cdb05b657b6eb9c6dd7450bee39e1a474f7d195088be14d4e82752074",
+            "displayExcerpt": "Giáo sư, Tiến sĩ Hà Văn Quyết\n\nGiáo sư, Tiến sĩ Hà Văn Quyết\n\nChuyên gia hơn 40 năm kinh nghiệm trong lĩnh vực bệnh lý Tiêu hóa\n\nNhiều năm kinh nghiệm trong việc điều trị các bệnh lý mạn tính như viêm đại tràng, hội chứng ruột kích thích, viêm dạ dày HP tái phát,...\n\nNguyên Giám đốc Bệnh viện Đại học Y Hà Nội\n\nHà Nội\n\nHỏi sâu thêm\n\nGiáo sư, Tiến sĩ, Bác sĩ Hà Văn Quyết\n\nChuyên ngành Ngoại – Phẫu thuật Nội soi Tiêu hóa, Ổ bụng & các bệnh lý hậu môn, trực tràng\n\nNguyên Chủ nhiệm Bộ môn Ngoại - Đại học Y Hà Nội\n\nNguyên Giám đốc Bệnh viện Đại học Y Hà Nội\n\nNguyên Phó Giám đốc Bệnh viện Việt Đức\n\nNhiều năm kinh nghiệm trong việc điều trị các bệnh lý mạn tính như viêm đại tràng, hội chứng ruột kích thích, viêm dạ dày HP tái phát,...\n\nTrực tiếp thực hiện các kỹ thuật nội soi bao gồm nội soi dạ dày, đại tràng\n\nBác sĩ dành thời gian để giải thích rõ tình trạng bệnh và phác đồ điều trị, giúp người bệnh an tâm và hiểu rõ quá trình chăm sóc sức khỏe\n\nKhám và điều trị\n\nGiáo sư nhận khám, điều trị các bệnh lý khó về Tiê"
+          }
+        ],
+        "mode": "llm",
+        "intent": "search",
+        "metrics": {
+          "latencyMs": 2411,
+          "inputTokens": 2322,
+          "outputTokens": 353,
+          "model": "claude-haiku-5-5",
+          "reasoning": "low"
+        }
+      }
+    },
+    {
+      "id": "facility",
+      "message": "Tôi muốn tìm xét nghiệm tại Diag ở TP. Hồ Chí Minh",
+      "city": "TP. Hồ Chí Minh",
+      "httpStatus": 200,
+      "endToEndLatencyMs": 2107,
+      "passed": true,
+      "result": {
+        "answer": "Trung tâm xét nghiệm Diag Laboratories tại TP. Hồ Chí Minh có trong dữ liệu hiện có [1], với các nhóm dịch vụ như gói tầm soát dấu ấn ung thư nam, tầm soát tuyến giáp và gói chẩn đoán sốt chưa rõ nguyên nhân [1].\n\nDữ liệu này chưa xác minh giá, lịch trống hay giờ làm việc hiện tại. Bạn nên mở hồ sơ Diag trên BookingCare [1] để xem gói xét nghiệm, chọn ngày giờ và chờ xác nhận chính thức.\n\nNếu bạn cho tôi biết xét nghiệm cụ thể cần làm hoặc khu vực trong TP. Hồ Chí Minh bạn tiện đi lại, tôi sẽ lọc các gói phù hợp hơn từ nguồn này.",
+        "sources": [
+          {
+            "id": "p404",
+            "name": "Trung tâm xét nghiệm Diag Laboratories",
+            "type": "facility",
+            "city": "TP. Hồ Chí Minh",
+            "specialties": [
+              "Tim mạch",
+              "Xét nghiệm"
+            ],
+            "summary": "Cơ sở y tế · Tim mạch, Xét nghiệm. Thông tin công khai trên BookingCare.",
+            "excerpt": "Trung tâm xét nghiệm Diag Laboratories414 - 420 Cao Thắng, phường Hòa Hưng, TP. Hồ Chí Minh Đặt lịch khám GIỚI THIỆU CHUNG THẾ MẠNH CHUYÊN MÔN TRANG THIẾT BỊ VỊ TRÍHỏi sâu thêmBookingCare là Nền tảng Y tế chăm sóc sức khỏe toàn diện hàng đầu Việt Nam kết nối người dùng với trên 200 bệnh viện - phòng khám uy tín, hơn 1,500 bác sĩ chuyên khoa giỏi và hàng nghìn dịch vụ, sản phẩm y tế chất lượng cao.Hãy đặt lịch với Trung tâm xét nghiệm Diag Laboratories trên Nền tảng Y tế Chăm sóc sức khỏe toàn diện BookingCare: Được lựa chọn dịch vụ y tế chất lượng Đặt hẹn trực tuyến & nhận hướng dẫn chi tiết trước khi đến (miễn phí) Giảm thiểu thời gian chờ đợi Xét nghiệmXem thêmXem thêmDịch vụ xét nghiệm của Trung tâm xét nghiệm Diag LaboratoriesHỏi sâu thêmXem thêmGói xét nghiệm tầm soát dấu ấn ung thư nam (DIAG15M)Hỏi sâu thêmXem thêmGói xét nghiệm tầm soát tuyến giáp (DIAG35)Hỏi sâu thêmXem thêmGói xét nghiệm các loại Sốt chưa rõ nguyên nhân (DIAG81)Hỏi sâu thêmXem thêmGói xét nghiệm chẩn đoán sốt ",
+            "url": "https://bookingcare.vn/co-so-y-te/trung-tam-xet-nghiem-diag-laboratories-p404",
+            "fetchedAt": "2026-11-10T15:08:52.131Z",
+            "contentHash": "d32887cd491901d1c9c9b91af47ffd66fe4b5214374dacc5d203ed2606ef4828",
+            "displayExcerpt": "Trung tâm xét nghiệm Diag Laboratories\n\n414 - 420 Cao Thắng, phường Hòa Hưng, TP. Hồ Chí Minh\n\nĐặt lịch khám\n\nGIỚI THIỆU CHUNG\n\nTHẾ MẠNH CHUYÊN MÔN\n\nTRANG THIẾT BỊ\n\nVỊ TRÍ\n\nHỏi sâu thêm\n\nBookingCare là Nền tảng Y tế chăm sóc sức khỏe toàn diện hàng đầu Việt Nam kết nối người dùng với trên 200 bệnh viện - phòng khám uy tín, hơn 1,500 bác sĩ chuyên khoa giỏi và hàng nghìn dịch vụ, sản phẩm y tế chất lượng cao.\n\nHãy đặt lịch với Trung tâm xét nghiệm Diag Laboratories trên Nền tảng Y tế Chăm sóc sức khỏe toàn diện BookingCare:\n\nĐược lựa chọn dịch vụ y tế chất lượng\n\nĐặt hẹn trực tuyến & nhận hướng dẫn chi tiết trước khi đến (miễn phí)\n\nGiảm thiểu thời gian chờ đợi\n\nXét nghiệm\n\nXem thêm\n\nXem thêm\n\nDịch vụ xét nghiệm của Trung tâm xét nghiệm Diag Laboratories\n\nHỏi sâu thêm\n\nXem thêm"
+          },
+          {
+            "id": "i1591",
+            "name": "Tiến sĩ, Bác sĩ Phạm Chí Lăng",
+            "type": "doctor",
+            "city": "TP. Hồ Chí Minh",
+            "specialties": [
+              "Cơ Xương Khớp"
+            ],
+            "summary": "Hồ sơ bác sĩ · Cơ Xương Khớp. Thông tin công khai trên BookingCare.",
+            "excerpt": "Tiến sĩ, Bác sĩ Phạm Chí LăngTiến sĩ, Bác sĩ Phạm Chí LăngChuyên gia hơn 30 năm kinh nghiệm lâm sàng dày dặn trong lĩnh vực Cơ xương khớp - Chấn thương chỉnh hình Chuyên gia đầu ngành trong lĩnh vực chấn thương chỉnh hình và cơ xương khớp Từng công tác tại các bệnh viện lớn như: Bệnh viện Chợ Rẫy, Bệnh viện Chấn thương chỉnh hình TP.HCM, Bệnh viện Pháp Việt (FV) Bác sĩ nổi tiếng với khả năng phẫu thuật thay khớp háng, khớp gối, đặc biệt là các ca phức tạp ở bệnh nhân cao tuổiThành phố Hồ Chí MinhHỏi sâu thêmTiến sĩ, Bác sĩ Phạm Chí Lăng Chuyên gia 30 năm kinh nghiệm lâm sàng dày dặn trong lĩnh vực Cơ xương khớp - Chấn thương chỉnh hình Chuyên gia đầu ngành trong lĩnh vực chấn thương chỉnh hình và cơ xương khớp Từng công tác tại các bệnh viện lớn như: Bệnh viện Chợ Rẫy, Bệnh viện Chấn thương chỉnh hình TP.HCM, Bệnh viện Pháp Việt (FV) Trưởng khoa Chấn thương chỉnh hình tại Bệnh viện Quốc tế City (CIH) Bác sĩ nổi tiếng là người tiên phong và có kinh nghiệm vượt trội trong các ca phẫu thu",
+            "url": "https://bookingcare.vn/dich-vu-y-te/kham-chuyen-khoa/tien-si-bac-si-pham-chi-lang-i1591",
+            "fetchedAt": "2026-11-10T15:09:04.975Z",
+            "contentHash": "9f8de42a5f9147d256e4d60fcce3ec932f56258e5cf6b85d55198733c190e9cb",
+            "displayExcerpt": "Tiến sĩ, Bác sĩ Phạm Chí Lăng\n\nTiến sĩ, Bác sĩ Phạm Chí Lăng\n\nChuyên gia hơn 30 năm kinh nghiệm lâm sàng dày dặn trong lĩnh vực Cơ xương khớp - Chấn thương chỉnh hình\n\nChuyên gia đầu ngành trong lĩnh vực chấn thương chỉnh hình và cơ xương khớp\n\nTừng công tác tại các bệnh viện lớn như: Bệnh viện Chợ Rẫy, Bệnh viện Chấn thương chỉnh hình TP.HCM, Bệnh viện Pháp Việt (FV)\n\nBác sĩ nổi tiếng với khả năng phẫu thuật thay khớp háng, khớp gối, đặc biệt là các ca phức tạp ở bệnh nhân cao tuổi\n\nThành phố Hồ Chí Minh\n\nHỏi sâu thêm\n\nTiến sĩ, Bác sĩ Phạm Chí Lăng\n\nChuyên gia 30 năm kinh nghiệm lâm sàng dày dặn trong lĩnh vực Cơ xương khớp - Chấn thương chỉnh hình\n\nChuyên gia đầu ngành trong lĩnh vực chấn thương chỉnh hình và cơ xương khớp\n\nTừng công tác tại các bệnh viện lớn như: Bệnh viện Chợ Rẫy, Bệnh viện Chấn thương chỉnh hình TP.HCM, Bệnh viện Pháp Việt (FV)\n\nTrưởng khoa Chấn thương chỉnh hình tại Bệnh viện Quốc tế City (CIH)\n\nBác sĩ nổi tiếng là người tiên phong và có kinh nghiệm vượt trội trong các ca phẫu thu"
+          },
+          {
+            "id": "p154",
+            "name": "Phòng khám Bệnh viện Đại học Y Dược 1",
+            "type": "facility",
+            "city": "TP. Hồ Chí Minh",
+            "specialties": [],
+            "summary": "Cơ sở y tế. Thông tin công khai trên BookingCare.",
+            "excerpt": "Phòng khám Bệnh viện Đại học Y Dược 120-22 Dương Quang Trung, phường Hòa Hưng, TP. Hồ Chí Minh Đặt lịch khám GIỚI THIỆU THẾ MẠNH CHUYÊN MÔN TRANG THIẾT BỊ VỊ TRÍ QUY TRÌNH ĐI KHÁMTất cảBác sĩGói khámHỏi sâu thêmBookingCare là Nền tảng Y tế chăm sóc sức khỏe toàn diện hàng đầu Việt Nam kết nối người dùng với trên 200 bệnh viện - phòng khám uy tín, hơn 1,500 bác sĩ chuyên khoa giỏi và hàng nghìn dịch vụ, sản phẩm y tế chất lượng cao.Từ nay, người bệnh có thể đặt khám Phòng khám Bệnh viện Đại học Y Dược 1 thông qua hệ thống đặt khám BookingCare. Được lựa chọn khám với các bác sĩ chuyên khoa giàu kinh nghiệm Hỗ trợ đặt khám trực tuyến trước khi đi khám (miễn phí đặt lịch) Giảm thiểu thời gian chờ đợi xếp hàng làm thủ tục khám Nhận được hướng dẫn đi khám chi tiết sau khi đặt lịch Bác sĩXem thêmXem thêmBác sĩ Chuyên khoa I Võ Trần Thành NhânHỏi sâu thêmXem thêmThạc sĩ, Bác sĩ Lê Tấn LợiHỏi sâu thêmXem thêmBác sĩ Chuyên khoa I Trương Thị Tuyết HoaHỏi sâu thêmXem thêmBác sĩ Trần Ngọc AnHỏi sâu",
+            "url": "https://bookingcare.vn/co-so-y-te/phong-kham-benh-vien-dai-hoc-y-duoc-1-p154",
+            "fetchedAt": "2026-11-10T15:08:47.494Z",
+            "contentHash": "70310d3a36ef22a58046f5d9d604d7618b4dd6008d346635e9272fa9ff8e84c4",
+            "displayExcerpt": "Phòng khám Bệnh viện Đại học Y Dược 1\n\n20-22 Dương Quang Trung, phường Hòa Hưng, TP. Hồ Chí Minh\n\nĐặt lịch khám\n\nGIỚI THIỆU\n\nTHẾ MẠNH CHUYÊN MÔN\n\nTRANG THIẾT BỊ\n\nVỊ TRÍ\n\nQUY TRÌNH ĐI KHÁM\n\nTất cả\n\nBác sĩ\n\nGói khám\n\nHỏi sâu thêm\n\nBookingCare là Nền tảng Y tế chăm sóc sức khỏe toàn diện hàng đầu Việt Nam kết nối người dùng với trên 200 bệnh viện - phòng khám uy tín, hơn 1,500 bác sĩ chuyên khoa giỏi và hàng nghìn dịch vụ, sản phẩm y tế chất lượng cao.\n\nTừ nay, người bệnh có thể đặt khám Phòng khám Bệnh viện Đại học Y Dược 1 thông qua hệ thống đặt khám BookingCare.\n\nĐược lựa chọn khám với các bác sĩ chuyên khoa giàu kinh nghiệm\n\nHỗ trợ đặt khám trực tuyến trước khi đi khám (miễn phí đặt lịch)\n\nGiảm thiểu thời gian chờ đợi xếp hàng làm thủ tục khám\n\nNhận được hướng dẫn đi khám chi tiết sau khi đặt lịch\n\nBác sĩ\n\nXem thêm\n\nXem thêm\n\nBác sĩ Chuyên khoa I Võ Trần Thành Nhân\n\nHỏi sâu thêm"
+          },
+          {
+            "id": "p450",
+            "name": "Doctor Check - Tầm Soát Bệnh Để Sống Thọ Hơn",
+            "type": "facility",
+            "city": "TP. Hồ Chí Minh",
+            "specialties": [
+              "Khám tổng quát"
+            ],
+            "summary": "Cơ sở y tế · Khám tổng quát. Thông tin công khai trên BookingCare.",
+            "excerpt": "Doctor Check - Tầm Soát Bệnh Để Sống Thọ Hơn429 Tô Hiến Thành, phường Diên Hồng, TP. Hồ Chí Minh Đặt lịch khám GIỚI THIỆU CHUNG THẾ MẠNH CHUYÊN MÔN TRANG THIẾT BỊ VỊ TRÍHỏi sâu thêmGói khámXem thêmXem thêmGói Khám \"Bác Sĩ Khuyến Cáo\" (DC2) Hỏi sâu thêmXem thêmGói Khám Tổng Quát Chuyên Sâu Dành Cho Nam (DC3M)Hỏi sâu thêmXem thêmGói Khám Tổng Quát Chuyên Sâu Dành Cho Nữ (DC3F)Hỏi sâu thêmXem thêmGói Khám Sống Thọ Dành Cho Nam (DC4M)Hỏi sâu thêmXem thêmGói Khám Sống Thọ Dành Cho Nữ (DC4F) Hỏi sâu thêmXem thêmGói tầm soát ung thư Thực Quản - Dạ Dày - Tá Tràng (DC115)Hỏi sâu thêmXem thêmGói tầm soát Ung thư Đại trực tràng (DC100) Hỏi sâu thêmGIỚI THIỆU CHUNGDoctor Check tiên phong trong lĩnh vực tầm soát sức khỏe được Sở Y tế cấp phép, mang lại dịch vụ chất lượng cao với giá thành hợp lý. Doctor Check mang trong mình sứ mệnh cung cấp dịch vụ đánh giá sức khoẻ toàn diện, các dịch vụ diễn ra nhanh chóng, tiện lợi và tiết kiệm với mọi người. Chúng tôi không ngừng nâng cao chất lượng, hướng đến",
+            "url": "https://bookingcare.vn/co-so-y-te/doctor-check--tam-soat-benh-de-song-tho-hon-p450",
+            "fetchedAt": "2026-11-10T15:08:46.070Z",
+            "contentHash": "f24f0b9f7fa30063fc98f6069e74a77e6457422123946ece210b2b59952ec3c7",
+            "displayExcerpt": "Doctor Check - Tầm Soát Bệnh Để Sống Thọ Hơn\n\n429 Tô Hiến Thành, phường Diên Hồng, TP. Hồ Chí Minh\n\nĐặt lịch khám\n\nGIỚI THIỆU CHUNG\n\nTHẾ MẠNH CHUYÊN MÔN\n\nTRANG THIẾT BỊ\n\nVỊ TRÍ\n\nHỏi sâu thêm\n\nGói khám\n\nXem thêm\n\nXem thêm\n\nGói Khám \"Bác Sĩ Khuyến Cáo\" (DC2)\n\nHỏi sâu thêm\n\nXem thêm\n\nGói Khám Tổng Quát Chuyên Sâu Dành Cho Nam (DC3M)\n\nHỏi sâu thêm\n\nXem thêm\n\nGói Khám Tổng Quát Chuyên Sâu Dành Cho Nữ (DC3F)\n\nHỏi sâu thêm\n\nXem thêm\n\nGói Khám Sống Thọ Dành Cho Nam (DC4M)\n\nHỏi sâu thêm\n\nXem thêm\n\nGói Khám Sống Thọ Dành Cho Nữ (DC4F)\n\nHỏi sâu thêm\n\nXem thêm\n\nGói tầm soát ung thư Thực Quản - Dạ Dày - Tá Tràng (DC115)\n\nHỏi sâu thêm\n\nXem thêm\n\nGói tầm soát Ung thư Đại trực tràng (DC100)\n\nHỏi sâu thêm\n\nGIỚI THIỆU CHUNG\n\nDoctor Check tiên phong trong lĩnh vực tầm soát sức khỏe được Sở Y tế cấp phép, mang lại dịch vụ chất lượng cao với giá thành hợp lý.\n\nDoctor Check mang trong mình sứ mệnh cung cấp dịch vụ đánh giá sức khoẻ toàn diện, các dịch vụ diễn ra nhanh chóng, tiện lợi và tiết kiệm với mọi người. Chúng tôi không ngừng nâng cao chất lượng, hướng đến"
+          }
+        ],
+        "mode": "llm",
+        "intent": "search",
+        "metrics": {
+          "latencyMs": 1831,
+          "inputTokens": 4647,
+          "outputTokens": 324,
+          "model": "claude-haiku-5-5",
+          "reasoning": "low"
+        }
+      }
+    },
+    {
+      "id": "booking",
+      "message": "Hướng dẫn đặt lịch bác sĩ Hà Văn Quyết sáng mai",
+      "city": "Hà Nội",
+      "httpStatus": 200,
+      "endToEndLatencyMs": 2504,
+      "passed": true,
+      "result": {
+        "answer": "Bạn có thể bắt đầu từ hồ sơ bác sĩ trong nguồn [1]: Giáo sư, Tiến sĩ Hà Văn Quyết, khu vực Hà Nội, chuyên khoa Tiêu hóa và Xét nghiệm.\n\nCác bước:\n1. Mở hồ sơ bác sĩ trên BookingCare theo nguồn [1].\n2. Kiểm tra cơ sở khám và chuyên khoa hiển thị trên trang.\n3. Chọn ngày mai và khung giờ buổi sáng nếu còn trống.\n4. Hoàn tất thông tin theo yêu cầu của BookingCare.\n\nLưu ý: CarePath chưa xác minh lịch trống sáng mai, giá khám hay cơ sở cụ thể, nên không thể xác nhận đặt được chỗ. Chỉ khi BookingCare hiển thị lịch và gửi xác nhận chính thức thì lịch mới được giữ. Bạn đừng gửi CCCD hay hồ sơ bệnh án qua khung chat này.",
+        "sources": [
+          {
+            "id": "i56",
+            "name": "Giáo sư, Tiến sĩ Hà Văn Quyết",
+            "type": "doctor",
+            "city": "Hà Nội",
+            "specialties": [
+              "Tiêu hóa",
+              "Xét nghiệm"
+            ],
+            "summary": "Hồ sơ bác sĩ · Tiêu hóa, Xét nghiệm. Thông tin công khai trên BookingCare.",
+            "excerpt": "Giáo sư, Tiến sĩ Hà Văn QuyếtGiáo sư, Tiến sĩ Hà Văn QuyếtChuyên gia hơn 40 năm kinh nghiệm trong lĩnh vực bệnh lý Tiêu hóa Nhiều năm kinh nghiệm trong việc điều trị các bệnh lý mạn tính như viêm đại tràng, hội chứng ruột kích thích, viêm dạ dày HP tái phát,... Nguyên Giám đốc Bệnh viện Đại học Y Hà NộiHà NộiHỏi sâu thêmGiáo sư, Tiến sĩ, Bác sĩ Hà Văn Quyết Chuyên ngành Ngoại – Phẫu thuật Nội soi Tiêu hóa, Ổ bụng & các bệnh lý hậu môn, trực tràng Nguyên Chủ nhiệm Bộ môn Ngoại - Đại học Y Hà Nội Nguyên Giám đốc Bệnh viện Đại học Y Hà Nội Nguyên Phó Giám đốc Bệnh viện Việt Đức Nhiều năm kinh nghiệm trong việc điều trị các bệnh lý mạn tính như viêm đại tràng, hội chứng ruột kích thích, viêm dạ dày HP tái phát,... Trực tiếp thực hiện các kỹ thuật nội soi bao gồm nội soi dạ dày, đại tràng Bác sĩ dành thời gian để giải thích rõ tình trạng bệnh và phác đồ điều trị, giúp người bệnh an tâm và hiểu rõ quá trình chăm sóc sức khỏe Khám và điều trị Giáo sư nhận khám, điều trị các bệnh lý khó về Tiê",
+            "url": "https://bookingcare.vn/dich-vu-y-te/kham-chuyen-khoa/giao-su-tien-si-ha-van-quyet-i56",
+            "fetchedAt": "2026-11-10T15:09:06.264Z",
+            "contentHash": "11e6f84cdb05b657b6eb9c6dd7450bee39e1a474f7d195088be14d4e82752074",
+            "displayExcerpt": "Giáo sư, Tiến sĩ Hà Văn Quyết\n\nGiáo sư, Tiến sĩ Hà Văn Quyết\n\nChuyên gia hơn 40 năm kinh nghiệm trong lĩnh vực bệnh lý Tiêu hóa\n\nNhiều năm kinh nghiệm trong việc điều trị các bệnh lý mạn tính như viêm đại tràng, hội chứng ruột kích thích, viêm dạ dày HP tái phát,...\n\nNguyên Giám đốc Bệnh viện Đại học Y Hà Nội\n\nHà Nội\n\nHỏi sâu thêm\n\nGiáo sư, Tiến sĩ, Bác sĩ Hà Văn Quyết\n\nChuyên ngành Ngoại – Phẫu thuật Nội soi Tiêu hóa, Ổ bụng & các bệnh lý hậu môn, trực tràng\n\nNguyên Chủ nhiệm Bộ môn Ngoại - Đại học Y Hà Nội\n\nNguyên Giám đốc Bệnh viện Đại học Y Hà Nội\n\nNguyên Phó Giám đốc Bệnh viện Việt Đức\n\nNhiều năm kinh nghiệm trong việc điều trị các bệnh lý mạn tính như viêm đại tràng, hội chứng ruột kích thích, viêm dạ dày HP tái phát,...\n\nTrực tiếp thực hiện các kỹ thuật nội soi bao gồm nội soi dạ dày, đại tràng\n\nBác sĩ dành thời gian để giải thích rõ tình trạng bệnh và phác đồ điều trị, giúp người bệnh an tâm và hiểu rõ quá trình chăm sóc sức khỏe\n\nKhám và điều trị\n\nGiáo sư nhận khám, điều trị các bệnh lý khó về Tiê"
+          }
+        ],
+        "mode": "llm",
+        "intent": "booking",
+        "metrics": {
+          "latencyMs": 2239,
+          "inputTokens": 2328,
+          "outputTokens": 383,
+          "model": "claude-haiku-5-5",
+          "reasoning": "low"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "llmSucceeded": 3,
+    "meanEndToEndLatencyMs": 2458,
+    "meanInputTokens": 3099,
+    "meanOutputTokens": 353.3333333333333,
+    "note": "Three authenticated real HTTP conversations. Not the 120-case LLM-as-judge evaluation. Does not measure browser rendering."
+  }
+}
